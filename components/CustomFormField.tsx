@@ -20,6 +20,8 @@ import Image from "next/image";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Select } from './ui/select';
+import { SelectValue } from '@radix-ui/react-select';
 
 interface CustomProps{
   control: Control<any>,
@@ -100,6 +102,20 @@ const { fieldType, iconAlt, iconSrc, placeholder, showTimeSelect, dateFormat, re
             </FormControl>
           </div>
       )
+    case FormFieldType.SELECT: 
+      return(
+        <FormControl>
+          <Select onValueChange={field.change}
+            defaultValue={field.value}
+          > 
+            <FormControl className='shad-select-trigger'>
+              <SelectValue
+                placeholder={placeholder}
+              />
+            </FormControl>
+          </Select>
+        </FormControl>
+      )
     case FormFieldType.SKELETON:
       return renderSkeleton ? renderSkeleton(field) : null
     default:
@@ -121,7 +137,6 @@ const CustomFormField = (props: CustomProps) => {
           <RenderField field = {field} props = {props} />
 
           <FormMessage className="shad-error" />
-
         </FormItem>
       )}
     />
